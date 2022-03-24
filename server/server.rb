@@ -27,6 +27,7 @@ end
 # end
 
 def calculate_order_amount(_items)
+  p _items
   # total = []
   # _items.each {|item| total << item["amount"].to_i}
   # # Replace this constant with a calculation of the order's amount
@@ -34,8 +35,8 @@ def calculate_order_amount(_items)
   # # people from directly manipulating the amount on the client
   # p total.sum
   # total.sum
-  # 1400
-  _items
+  1400
+  # _items
 end
 
 post '/create-payment-intent' do

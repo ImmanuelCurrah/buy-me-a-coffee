@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TextInput, Button, Alert } from "react-native";
+import { StyleSheet, View, TextInput, Button, Alert } from "react-native";
+import CurrencyInput from "react-native-currency-input";
 import { useState, useEffect } from "react";
 import {
   StripeProvider,
@@ -11,7 +12,7 @@ import { API_URL } from "./Config";
 
 export default function App() {
   const [publishableKey, setPublishableKey] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [value, setValue] = useState(0.0);
   const [name, setName] = useState("");
   const { confirmPayment, loading } = useConfirmPayment();
 
@@ -22,7 +23,7 @@ export default function App() {
       body: JSON.stringify({
         paymentMethodType: "card",
         currency: "usd",
-        items: amount,
+        items: value,
       }),
     });
     const { clientSecret } = await response.json();
@@ -58,7 +59,16 @@ export default function App() {
           onChange={(value) => setName(value.nativeEvent.text)}
           style={styles.input}
         />
-        <TextInput
+        <CurrencyInput
+          value={value}
+          onChangeValue={setValue}
+          prefix="$"
+          delimiter=","
+          separator="."
+          precision={2}
+          style={styles.input}
+        />
+        {/* <TextInput
           keyboardType="numeric"
           autoCapitalize="none"
           placeholder="Amount"
@@ -70,7 +80,7 @@ export default function App() {
             }
           }}
           style={styles.input}
-        />
+        /> */}
         <CardField
           postalCodeEnabled={false}
           // onCardChange={(cardDetails) => {
