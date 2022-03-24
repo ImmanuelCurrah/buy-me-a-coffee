@@ -21,7 +21,11 @@ export default function App() {
       body: JSON.stringify({
         paymentMethodType: "card",
         currency: "usd",
-        items: ["bag", "purse", "box"], // this can be replaced with some state to calculate the amount in the backend
+        items: [
+          { name: "bag", amount: 1300 },
+          { name: "purse", amount: 1000 },
+          { name: "box", amount: 2300 },
+        ], // this can be replaced with some state to calculate the amount in the backend
       }),
     });
     const { clientSecret } = await response.json();
