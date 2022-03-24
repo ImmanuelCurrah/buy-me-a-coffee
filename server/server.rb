@@ -35,7 +35,7 @@ def calculate_order_amount(_items)
   # p total.sum
   # total.sum
   # 1400
-  _items["amount"]
+  _items
 end
 
 post '/create-payment-intent' do

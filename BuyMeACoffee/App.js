@@ -12,10 +12,6 @@ import { API_URL } from "./Config";
 export default function App() {
   const [publishableKey, setPublishableKey] = useState("");
   const [amount, setAmount] = useState(0);
-  const [purchasableItemsCost, setPurchasableItemsCost] = useState({
-    item: "giving a coffee",
-    amount: `${amount}`,
-  });
   const [name, setName] = useState("");
   const { confirmPayment, loading } = useConfirmPayment();
 
@@ -26,7 +22,7 @@ export default function App() {
       body: JSON.stringify({
         paymentMethodType: "card",
         currency: "usd",
-        items: purchasableItemsCost,
+        items: amount,
       }),
     });
     const { clientSecret } = await response.json();
@@ -68,8 +64,9 @@ export default function App() {
           placeholder="Amount"
           onChange={(value) => {
             if (!isNaN(value.nativeEvent.text)) {
+              setAmount(parseInt(value.nativeEvent.text));
             } else {
-              Alert.alert("Must be a number");
+              Alert.alert("Please enter a valid amount");
             }
           }}
           style={styles.input}
