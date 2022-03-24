@@ -5,7 +5,6 @@ import {
   StripeProvider,
   CardField,
   useConfirmPayment,
-  ConfirmPaymentError,
 } from "@stripe/stripe-react-native";
 import { fetchPublishableKey } from "./helper";
 import { API_URL } from "./Config";
@@ -22,6 +21,7 @@ export default function App() {
       body: JSON.stringify({
         paymentMethodType: "card",
         currency: "usd",
+        items: ["bag", "purse", "box"], // this can be replaced with some state to calculate the amount in the backend
       }),
     });
     const { clientSecret } = await response.json();
@@ -59,9 +59,9 @@ export default function App() {
         />
         <CardField
           postalCodeEnabled={false}
-          onCardChange={(cardDetails) => {
-            console.log(cardDetails);
-          }}
+          // onCardChange={(cardDetails) => {
+          //   console.log(cardDetails);
+          // }}
           cardStyle={{
             borderColor: "#000000",
             borderWidth: 1,

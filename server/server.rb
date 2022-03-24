@@ -36,11 +36,12 @@ end
 post '/create-payment-intent' do
   content_type 'application/json'
   data = JSON.parse(request.body.read)
+  puts data
 
   # Create a PaymentIntent with amount and currency
   payment_intent = Stripe::PaymentIntent.create(
     amount: calculate_order_amount(data['items']),
-    currency: 'eur',
+    currency: data["currency"],
     automatic_payment_methods: {
       enabled: true,
     },
