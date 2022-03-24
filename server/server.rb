@@ -27,18 +27,20 @@ end
 # end
 
 def calculate_order_amount(_items)
-  total = []
-  _items.each {|item| total << item["amount"]}
-  # Replace this constant with a calculation of the order's amount
-  # Calculate the order total on the server to prevent
-  # people from directly manipulating the amount on the client
-  total.sum
+  # total = []
+  # _items.each {|item| total << item["amount"].to_i}
+  # # Replace this constant with a calculation of the order's amount
+  # # Calculate the order total on the server to prevent
+  # # people from directly manipulating the amount on the client
+  # p total.sum
+  # total.sum
+  # 1400
+  _items["amount"]
 end
 
 post '/create-payment-intent' do
   content_type 'application/json'
   data = JSON.parse(request.body.read)
-  puts data
 
   # Create a PaymentIntent with amount and currency
   payment_intent = Stripe::PaymentIntent.create(

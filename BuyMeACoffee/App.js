@@ -11,6 +11,11 @@ import { API_URL } from "./Config";
 
 export default function App() {
   const [publishableKey, setPublishableKey] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [purchasableItemsCost, setPurchasableItemsCost] = useState({
+    item: "giving a coffee",
+    amount: `${amount}`,
+  });
   const [name, setName] = useState("");
   const { confirmPayment, loading } = useConfirmPayment();
 
@@ -21,11 +26,7 @@ export default function App() {
       body: JSON.stringify({
         paymentMethodType: "card",
         currency: "usd",
-        items: [
-          { name: "bag", amount: 1300 },
-          { name: "purse", amount: 1000 },
-          { name: "box", amount: 2300 },
-        ], // this can be replaced with some state to calculate the amount in the backend
+        items: purchasableItemsCost,
       }),
     });
     const { clientSecret } = await response.json();
@@ -61,6 +62,18 @@ export default function App() {
           onChange={(value) => setName(value.nativeEvent.text)}
           style={styles.input}
         />
+        <TextInput
+          keyboardType="numeric"
+          autoCapitalize="none"
+          placeholder="Amount"
+          onChange={(value) => {
+            if (!isNaN(value.nativeEvent.text)) {
+            } else {
+              Alert.alert("Must be a number");
+            }
+          }}
+          style={styles.input}
+        />
         <CardField
           postalCodeEnabled={false}
           // onCardChange={(cardDetails) => {
@@ -91,6 +104,7 @@ const styles = StyleSheet.create({
     width: "80%",
     borderBottomWidth: 1,
     borderBottomColor: "black",
+    height: 50,
   },
   cardField: {
     width: "80%",
