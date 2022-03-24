@@ -10,6 +10,8 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^1.7.0",
+    "@stripe/stripe-js": "^1.25.0",
     "@stripe/stripe-react-native": "0.2.3",
     "axios": "^0.26.1",
     "expo": "~44.0.0",

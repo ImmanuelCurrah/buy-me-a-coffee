@@ -1,4 +1,4 @@
-import { Platform } from "react-native-web";
+import { Platform } from "react-native";
 
 export const API_URL =
   Platform.OS === "android"
