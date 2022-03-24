@@ -33,19 +33,21 @@ def calculate_order_amount(_items)
   1400
 end
 
-post "/create-payment-intent" do 
-  content_type "application/json"
+post '/create-payment-intent' do
+  content_type 'application/json'
   data = JSON.parse(request.body.read)
 
+  # Create a PaymentIntent with amount and currency
   payment_intent = Stripe::PaymentIntent.create(
-    amount: calculate_order_amount(data["items"])
-    currency: "eur"
+    amount: calculate_order_amount(data['items']),
+    currency: 'eur',
     automatic_payment_methods: {
       enabled: true,
     },
   )
+
   {
-    clientSecret: payment_intent["client_secret"]
+    clientSecret: payment_intent['client_secret']
   }.to_json
 end
 
