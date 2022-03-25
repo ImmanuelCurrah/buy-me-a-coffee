@@ -83,9 +83,9 @@ export default function App() {
         /> */}
         <CardField
           postalCodeEnabled={false}
-          // onCardChange={(cardDetails) => {
-          //   console.log(cardDetails);
-          // }}
+          onCardChange={(cardDetails) => {
+            console.log(cardDetails);
+          }}
           cardStyle={{
             borderColor: "#000000",
             borderWidth: 1,
