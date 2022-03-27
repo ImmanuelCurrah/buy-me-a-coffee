@@ -9,11 +9,14 @@ import {
 } from "@stripe/stripe-react-native";
 import { fetchPublishableKey } from "../../helper";
 import { API_URL } from "../../Config";
+import isEmail from "validator/lib/isEmail";
 
 export default function PaymentPage({ navigation, route }) {
   const [publishableKey, setPublishableKey] = useState("");
   const [value, setValue] = useState(0.0);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [toggle, setToggle] = useState(false);
   const { confirmPayment, loading } = useConfirmPayment();
 
   const handlePayPress = async () => {
@@ -24,7 +27,8 @@ export default function PaymentPage({ navigation, route }) {
         paymentMethodType: "card",
         currency: "usd",
         items: value,
-        receipt_email: "immanueli.currah@gmail.com",
+        receipt_email: email,
+        name: name,
       }),
     });
     const { clientSecret } = await response.json();
@@ -60,6 +64,20 @@ export default function PaymentPage({ navigation, route }) {
           onChange={(value) => setName(value.nativeEvent.text)}
           style={styles.input}
         />
+        <TextInput
+          autoCapitalize="none"
+          placeholder="email"
+          keyboardType="email-address"
+          onChange={(value) => {
+            setEmail(value.nativeEvent.text);
+            if (isEmail(email)) {
+              setToggle(true);
+            } else {
+              setToggle(false);
+            }
+          }}
+          style={styles.input}
+        />
         <CurrencyInput
           value={value}
           onChangeValue={setValue}
@@ -81,7 +99,14 @@ export default function PaymentPage({ navigation, route }) {
           }}
           style={styles.cardField}
         />
-        <Button title="Pay" onPress={handlePayPress} disabled={loading} />
+        {toggle && (
+          <Button
+            title="Pay"
+            onPress={handlePayPress}
+            disabled={loading}
+            style={styles.button}
+          />
+        )}
         <StatusBar style="auto" />
       </View>
     </StripeProvider>
