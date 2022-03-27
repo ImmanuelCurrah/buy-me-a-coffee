@@ -11,93 +11,22 @@ import { fetchPublishableKey } from "./helper";
 import { API_URL } from "./Config";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import TestScreen from "./components/route-testing/TestScreen";
+import Homepage from "./components/route-testing/Homepage";
 import Where from "./components/route-testing/Where";
 
 export default function App() {
-  const [publishableKey, setPublishableKey] = useState("");
-  const [value, setValue] = useState(0.0);
-  const [name, setName] = useState("");
-  const { confirmPayment, loading } = useConfirmPayment();
   const Stack = createNativeStackNavigator();
-
-  const handlePayPress = async () => {
-    const response = await fetch(`${API_URL}create-payment-intent`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        paymentMethodType: "card",
-        currency: "usd",
-        items: value,
-      }),
-    });
-    const { clientSecret } = await response.json();
-    const { error, paymentIntent } = await confirmPayment(clientSecret, {
-      type: "Card",
-      billingDetails: { name },
-    });
-
-    if (error) {
-      Alert.alert(`Error code: ${error.code}`, error.message);
-    } else if (paymentIntent) {
-      Alert.alert("Success", `Payment Successful: ${paymentIntent.id}`);
-    }
-  };
-
-  useEffect(() => {
-    const init = async () => {
-      const publishableKey = await fetchPublishableKey();
-      if (publishableKey) {
-        setPublishableKey(publishableKey);
-      }
-    };
-    init();
-  }, []);
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Test"
-          component={TestScreen}
-          options={{ title: "Test" }}
+          component={Homepage}
+          options={{ title: "Homepage" }}
         />
         <Stack.Screen name="Where" component={Where} />
       </Stack.Navigator>
-      <StripeProvider publishableKey={publishableKey}>
-        <View style={styles.container}>
-          <TextInput
-            autoCapitalize="none"
-            placeholder="Name"
-            keyboardType="name-phone-pad"
-            onChange={(value) => setName(value.nativeEvent.text)}
-            style={styles.input}
-          />
-          <CurrencyInput
-            value={value}
-            onChangeValue={setValue}
-            prefix="$"
-            delimiter=","
-            separator="."
-            precision={2}
-            style={styles.input}
-          />
-          <CardField
-            postalCodeEnabled={false}
-            onCardChange={(cardDetails) => {
-              console.log(cardDetails);
-            }}
-            cardStyle={{
-              borderColor: "#000000",
-              borderWidth: 1,
-              borderRadius: 8,
-            }}
-            style={styles.cardField}
-          />
-          <Button title="Pay" onPress={handlePayPress} disabled={loading} />
-          <StatusBar style="auto" />
-        </View>
-      </StripeProvider>
     </NavigationContainer>
   );
 }
