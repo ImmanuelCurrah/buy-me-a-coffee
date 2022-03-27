@@ -44,6 +44,7 @@ post '/create-payment-intent' do
     amount: calculate_order_amount(data['items']),
     currency: data["currency"],
     receipt_email: data["receipt_email"],
+    customer: data["name"],
     automatic_payment_methods: {
       enabled: true,
     },
