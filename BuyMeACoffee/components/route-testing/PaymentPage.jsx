@@ -10,7 +10,7 @@ import {
 import { fetchPublishableKey } from "../../helper";
 import { API_URL } from "../../Config";
 
-export default function Where({ navigation, route }) {
+export default function PaymentPage({ navigation, route }) {
   const [publishableKey, setPublishableKey] = useState("");
   const [value, setValue] = useState(0.0);
   const [name, setName] = useState("");
