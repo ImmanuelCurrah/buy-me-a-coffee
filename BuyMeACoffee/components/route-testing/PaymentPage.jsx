@@ -24,6 +24,7 @@ export default function PaymentPage({ navigation, route }) {
         paymentMethodType: "card",
         currency: "usd",
         items: value,
+        receipt_email: "immanueli.currah@gmail.com",
       }),
     });
     const { clientSecret } = await response.json();

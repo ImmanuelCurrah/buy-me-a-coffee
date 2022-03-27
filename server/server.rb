@@ -27,16 +27,12 @@ end
 # end
 
 def calculate_order_amount(_items)
-  p _items
-  # total = []
-  # _items.each {|item| total << item["amount"].to_i}
+  total = _items.to_s.split(".").join.to_i
   # # Replace this constant with a calculation of the order's amount
   # # Calculate the order total on the server to prevent
   # # people from directly manipulating the amount on the client
-  # p total.sum
-  # total.sum
-  1400
-  # _items
+  # 1400
+  total
 end
 
 post '/create-payment-intent' do
@@ -47,6 +43,7 @@ post '/create-payment-intent' do
   payment_intent = Stripe::PaymentIntent.create(
     amount: calculate_order_amount(data['items']),
     currency: data["currency"],
+    receipt_email: data["receipt_email"],
     automatic_payment_methods: {
       enabled: true,
     },
