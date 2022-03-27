@@ -9,12 +9,16 @@ import {
 } from "@stripe/stripe-react-native";
 import { fetchPublishableKey } from "./helper";
 import { API_URL } from "./Config";
+import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import TestScreen from "./components/route-testing/TestScreen";
 
 export default function App() {
   const [publishableKey, setPublishableKey] = useState("");
   const [value, setValue] = useState(0.0);
   const [name, setName] = useState("");
   const { confirmPayment, loading } = useConfirmPayment();
+  const Stack = createNativeStackNavigator();
 
   const handlePayPress = async () => {
     const response = await fetch(`${API_URL}create-payment-intent`, {
@@ -50,53 +54,49 @@ export default function App() {
   }, []);
 
   return (
-    <StripeProvider publishableKey={publishableKey}>
-      <View style={styles.container}>
-        <TextInput
-          autoCapitalize="none"
-          placeholder="Name"
-          keyboardType="name-phone-pad"
-          onChange={(value) => setName(value.nativeEvent.text)}
-          style={styles.input}
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Test"
+          component={TestScreen}
+          options={{ title: "Test" }}
         />
-        <CurrencyInput
-          value={value}
-          onChangeValue={setValue}
-          prefix="$"
-          delimiter=","
-          separator="."
-          precision={2}
-          style={styles.input}
-        />
-        {/* <TextInput
-          keyboardType="numeric"
-          autoCapitalize="none"
-          placeholder="Amount"
-          onChange={(value) => {
-            if (!isNaN(value.nativeEvent.text)) {
-              setAmount(parseInt(value.nativeEvent.text));
-            } else {
-              Alert.alert("Please enter a valid amount");
-            }
-          }}
-          style={styles.input}
-        /> */}
-        <CardField
-          postalCodeEnabled={false}
-          onCardChange={(cardDetails) => {
-            console.log(cardDetails);
-          }}
-          cardStyle={{
-            borderColor: "#000000",
-            borderWidth: 1,
-            borderRadius: 8,
-          }}
-          style={styles.cardField}
-        />
-        <Button title="Pay" onPress={handlePayPress} disabled={loading} />
-        <StatusBar style="auto" />
-      </View>
-    </StripeProvider>
+      </Stack.Navigator>
+      <StripeProvider publishableKey={publishableKey}>
+        <View style={styles.container}>
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Name"
+            keyboardType="name-phone-pad"
+            onChange={(value) => setName(value.nativeEvent.text)}
+            style={styles.input}
+          />
+          <CurrencyInput
+            value={value}
+            onChangeValue={setValue}
+            prefix="$"
+            delimiter=","
+            separator="."
+            precision={2}
+            style={styles.input}
+          />
+          <CardField
+            postalCodeEnabled={false}
+            onCardChange={(cardDetails) => {
+              console.log(cardDetails);
+            }}
+            cardStyle={{
+              borderColor: "#000000",
+              borderWidth: 1,
+              borderRadius: 8,
+            }}
+            style={styles.cardField}
+          />
+          <Button title="Pay" onPress={handlePayPress} disabled={loading} />
+          <StatusBar style="auto" />
+        </View>
+      </StripeProvider>
+    </NavigationContainer>
   );
 }
 
