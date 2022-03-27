@@ -1,5 +1,12 @@
-import { Text } from "react-native";
+import { Text, Button } from "react-native";
 
 export default function TestScreen({ navigation }) {
-  return <Text>Here</Text>;
+  return (
+    <Button
+      title="test out this navigation yo"
+      onPress={() => {
+        navigation.navigate("Where", { example: "here" });
+      }}
+    />
+  );
 }

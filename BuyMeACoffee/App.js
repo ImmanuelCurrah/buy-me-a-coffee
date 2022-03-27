@@ -12,6 +12,7 @@ import { API_URL } from "./Config";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TestScreen from "./components/route-testing/TestScreen";
+import Where from "./components/route-testing/Where";
 
 export default function App() {
   const [publishableKey, setPublishableKey] = useState("");
@@ -61,6 +62,7 @@ export default function App() {
           component={TestScreen}
           options={{ title: "Test" }}
         />
+        <Stack.Screen name="Where" component={Where} />
       </Stack.Navigator>
       <StripeProvider publishableKey={publishableKey}>
         <View style={styles.container}>
