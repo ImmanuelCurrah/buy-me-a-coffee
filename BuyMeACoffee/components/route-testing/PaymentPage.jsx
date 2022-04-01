@@ -27,7 +27,7 @@ export default function PaymentPage({ navigation, route }) {
         paymentMethodType: "card",
         currency: "usd",
         items: value,
-        receipt_email: email,
+        // receipt_email: email,
         name: name,
       }),
     });
@@ -89,9 +89,9 @@ export default function PaymentPage({ navigation, route }) {
         />
         <CardField
           postalCodeEnabled={false}
-          onCardChange={(cardDetails) => {
-            console.log(cardDetails);
-          }}
+          // onCardChange={(cardDetails) => {
+          //   console.log(cardDetails);
+          // }}
           cardStyle={{
             borderColor: "#000000",
             borderWidth: 1,
