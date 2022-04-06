@@ -1,5 +1,14 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, TextInput, Button, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Button,
+  Alert,
+  TouchableOpacity,
+  Text,
+  Image,
+} from "react-native";
 import CurrencyInput from "react-native-currency-input";
 import { useState, useEffect } from "react";
 import {
@@ -40,7 +49,7 @@ export default function PaymentPage({ navigation, route }) {
     if (error) {
       Alert.alert(`Error code: ${error.code}`, error.message);
     } else if (paymentIntent) {
-      Alert.alert("Success", `Payment Successful: ${paymentIntent.id}`);
+      Alert.alert("Thank you!", `Your support is very much appreciated`);
     }
   };
 
@@ -57,6 +66,10 @@ export default function PaymentPage({ navigation, route }) {
   return (
     <StripeProvider publishableKey={publishableKey}>
       <View style={styles.container}>
+        <Image
+          source={require("../assests/pictures/stripe.png")}
+          style={styles.image}
+        />
         <TextInput
           autoCapitalize="none"
           placeholder="Name"
@@ -100,12 +113,13 @@ export default function PaymentPage({ navigation, route }) {
           style={styles.cardField}
         />
         {toggle && (
-          <Button
-            title="Pay"
-            onPress={handlePayPress}
-            disabled={loading}
+          <TouchableOpacity
             style={styles.button}
-          />
+            disabled={loading}
+            onPress={handlePayPress}
+          >
+            <Text style={styles.text}>Pay</Text>
+          </TouchableOpacity>
         )}
         <StatusBar style="auto" />
       </View>
@@ -116,19 +130,41 @@ export default function PaymentPage({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#7b68ee",
     alignItems: "center",
     justifyContent: "center",
+    color: "white",
   },
   input: {
     width: "80%",
-    borderBottomWidth: 1,
-    borderBottomColor: "black",
-    height: 50,
+    height: 40,
+    backgroundColor: "white",
+    margin: 10,
+    borderRadius: 5,
+    padding: 5,
   },
   cardField: {
     width: "80%",
     height: 50,
     marginVertical: 30,
+    backgroundColor: "white",
+    borderRadius: 7,
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+    margin: 10,
+    borderRadius: 12,
+    width: 80,
+  },
+  text: {
+    fontSize: 20,
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    width: 300,
+    height: 20,
   },
 });

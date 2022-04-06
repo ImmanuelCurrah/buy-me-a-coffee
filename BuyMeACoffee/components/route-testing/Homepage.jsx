@@ -29,7 +29,7 @@ export default function Homepage({ navigation }) {
             navigation.navigate("Where", { example: "here" });
           }}
         >
-          <Text>Press Here</Text>
+          <Text>Buy me a Coffee</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
