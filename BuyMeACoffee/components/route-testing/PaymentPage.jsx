@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   TextInput,
-  Button,
   Alert,
   TouchableOpacity,
   Text,
@@ -66,10 +65,7 @@ export default function PaymentPage({ navigation, route }) {
   return (
     <StripeProvider publishableKey={publishableKey}>
       <View style={styles.container}>
-        <Image
-          source={require("../assests/pictures/stripe.png")}
-          style={styles.image}
-        />
+        <Text style={styles.text}>Powered by Stripe!</Text>
         <TextInput
           autoCapitalize="none"
           placeholder="Name"
@@ -163,8 +159,8 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    resizeMode: "cover",
-    width: 300,
-    height: 20,
+    resizeMode: "contain",
+    aspectRatio: 0.3,
+    width: 100,
   },
 });
