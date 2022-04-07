@@ -35,7 +35,7 @@ export default function PaymentPage({ navigation, route }) {
         paymentMethodType: "card",
         currency: "usd",
         items: value,
-        // receipt_email: email,
+        receipt_email: email,
         name: name,
       }),
     });
@@ -57,6 +57,9 @@ export default function PaymentPage({ navigation, route }) {
       const publishableKey = await fetchPublishableKey();
       if (publishableKey) {
         setPublishableKey(publishableKey);
+      } else {
+        console.log("did not get publishable key");
+        Alert.alert("did not get the key, access to the API will be denied");
       }
     };
     init();
