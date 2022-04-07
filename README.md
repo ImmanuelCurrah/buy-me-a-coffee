@@ -11,3 +11,7 @@ My first project using Stripe implementation.
 - In the BuyMeACoffee folder run npm start, once metro has started running and your prompted too. Press i to open the ios simulator. You must have Xcode downloaded to see this.
 - This will bring up the app. Press the button on the front page and fill out the card info.
 - Done!
+
+# Demo
+
+![](demo.gif)
