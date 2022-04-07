@@ -48,7 +48,8 @@ export default function PaymentPage({ navigation, route }) {
       Alert.alert(`Error code: ${error.code}`, error.message);
     } else if (paymentIntent) {
       Alert.alert("Thank you!", `Your support is very much appreciated`);
-      resetInput();
+      // resetInput();
+      navigation.navigate("Test");
     }
   };
 
