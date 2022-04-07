@@ -31,8 +31,8 @@ def calculate_order_amount(_items)
   # # Replace this constant with a calculation of the order's amount
   # # Calculate the order total on the server to prevent
   # # people from directly manipulating the amount on the client
-  # 1400
-  total
+  1400
+  # total
 end
 
 post '/create-payment-intent' do
