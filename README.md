@@ -14,4 +14,4 @@ My first project using Stripe implementation.
 
 # Demo
 
-<img src=demo.gif />
+<img src=demo.gif height="500"/>
