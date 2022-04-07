@@ -6,7 +6,6 @@ import {
   Alert,
   TouchableOpacity,
   Text,
-  Image,
 } from "react-native";
 import CurrencyInput from "react-native-currency-input";
 import { useState, useEffect } from "react";
@@ -49,7 +48,15 @@ export default function PaymentPage({ navigation, route }) {
       Alert.alert(`Error code: ${error.code}`, error.message);
     } else if (paymentIntent) {
       Alert.alert("Thank you!", `Your support is very much appreciated`);
+      resetInput();
     }
+  };
+
+  const resetInput = () => {
+    setName("");
+    setValue(0.0);
+    setEmail("");
+    setToggle(false);
   };
 
   useEffect(() => {
@@ -73,6 +80,7 @@ export default function PaymentPage({ navigation, route }) {
           autoCapitalize="none"
           placeholder="Name"
           keyboardType="name-phone-pad"
+          value={name}
           onChange={(value) => setName(value.nativeEvent.text)}
           style={styles.input}
         />
@@ -80,6 +88,7 @@ export default function PaymentPage({ navigation, route }) {
           autoCapitalize="none"
           placeholder="email"
           keyboardType="email-address"
+          value={email}
           onChange={(value) => {
             setEmail(value.nativeEvent.text);
             if (isEmail(email)) {
@@ -115,7 +124,10 @@ export default function PaymentPage({ navigation, route }) {
           <TouchableOpacity
             style={styles.button}
             disabled={loading}
-            onPress={handlePayPress}
+            onPress={() => {
+              handlePayPress();
+              // resetInput();
+            }}
           >
             <Text style={styles.text}>Pay</Text>
           </TouchableOpacity>
